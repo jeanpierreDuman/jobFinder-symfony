@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    cv_directory: '%kernel.project_dir%/public/uploads/cv'
+    cv_motivation: '%kernel.project_dir%/public/uploads/motivation'
 
 services:
     # default configuration for services in *this* file
@@ -22,6 +24,13 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    App\Service\FileUploader:
+        class: App\Service\FileUploader
+        arguments:
+            $directoryCV: '%cv_directory%'
+            $directoryMotivation: '%cv_motivation%'
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
