@@ -5,6 +5,7 @@ namespace App\Service;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Filesystem\Filesystem;
 use App\Entity\User;
 
 class FileUploader
@@ -19,10 +20,8 @@ class FileUploader
         $this->directoryMotivation = $directoryMotivation;
     }
 
-    public function uploadMultiple(User $user = null, $options = [])
+    public function uploadMultiple(User $user = null, array $options = [])
     {
-        dd($user);
-
         foreach($options as $key => $file) {
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
@@ -31,9 +30,38 @@ class FileUploader
             $directory = $this->getDirectory($key);
             try {
                 $file->move($directory, $fileName);
+                $this->setUserFile($user, $key, $fileName);
             } catch (FileException $e) {
                 // ... handle exception if something happens during file upload
             }
+        }
+
+        return $user;
+    }
+
+    private function setUserFile($user, $type, $fileName)
+    {
+        $filesystem = new Filesystem();
+
+        switch ($type) {
+            case 'cv':
+
+                if($user->getCv() !== null) {
+                    $filesystem->remove($this->getDirectory($type) . '/' . $user->getCv());
+                }
+                $user->setCv($fileName);
+                break;
+
+            case 'motivation':
+                if($user->getMotivation() !== null) {
+                    $filesystem->remove($this->getDirectory($type) . '/' . $user->getMotivation());
+                }
+                $user->setMotivation($fileName);
+                break;
+
+            default:
+                throw new \Exception('invalid key');
+                break;
         }
     }
 

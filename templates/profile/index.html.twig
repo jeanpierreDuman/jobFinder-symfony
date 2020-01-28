@@ -3,5 +3,72 @@
 {% block title %}Hello ProfileController!{% endblock %}
 
 {% block body %}
-    {{ user.email }}
+    <p>
+        <a href="{{ path('profile_edit') }}">Modifier mon profil</a>
+    </p>
+
+    <div class="">
+        <p>
+            {{ user.email }}
+        </p>
+    </div>
+
+    <div class="">
+        <h3>Documents</h3>
+        <div>
+            <p>
+                CV :
+                {% if user.cv is null or user.cv == '' %}
+                    <b>
+                        Aucun document
+                    </b>
+                {% else %}
+                    {{ user.cv }}
+                {% endif %}
+            </p>
+            <p>
+                Lettre de motivation :
+                {% if user.motivation is null or user.motivation == '' %}
+                    <b>
+                        Aucun document
+                    </b>
+                {% else %}
+                    {{ user.motivation }}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+    <div class="">
+        <h3>Expériences</h3>
+        <p>
+            {% for experience in user.experiences %}
+                <p>
+                    {{loop.index}} ) {{ experience.name }} - {{ experience.society }} - {{ experience.type }} <br>
+                    {{ experience.description }}
+                </p>
+            {% else %}
+                <p>
+                    Aucune expérience
+                </p>
+            {% endfor %}
+        </p>
+    </div>
+
+    <div class="">
+        <h3>Formations</h3>
+        <p>
+            {% for formation in user.formations %}
+                <p>
+                    {{loop.index}} ) {{ formation.school }} - {{ formation.diploma }} <br>
+                    {{ formation.description }}
+                </p>
+            {% else %}
+                <p>
+                    Aucune formation
+                </p>
+            {% endfor %}
+        </p>
+    </div>
+
 {% endblock %}

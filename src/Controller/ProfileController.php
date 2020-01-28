@@ -32,11 +32,24 @@ class ProfileController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $profileFiles = $request->files->get('profile');
-            $fileUploader->uploadMultiple($user, [
-                'cv' => $profileFiles['cv'],
-                'motivation' => $profileFiles['motivation']
-            ]);
-            dd('ok');
+
+            if($profileFiles['cv'] !== null) {
+                $user = $fileUploader->uploadMultiple($user, [
+                    'cv' => $profileFiles['cv'],
+                ]);
+            }
+
+            if($profileFiles['motivation'] !== null) {
+                $user = $fileUploader->uploadMultiple($user, [
+                    'motivation' => $profileFiles['motivation']
+                ]);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('profile');
         }
 
         return $this->render('profile/edit.html.twig', [

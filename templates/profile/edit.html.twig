@@ -3,5 +3,40 @@
 {% block title %}Hello ProfileController!{% endblock %}
 
 {% block body %}
-    {{ form(form) }}
+    {{ form_start(form) }}
+
+        {{ form_row(form.email) }}
+        {{ form_row(form.cv) }}
+        {{ form_row(form.motivation) }}
+
+        <ul class="experiences" data-prototype="{{ form_widget(form.experiences.vars.prototype)|e('html_attr') }}">
+             {% for experience in form.experiences %}
+                <li>
+                    {{ form_row(experience.society) }}
+                    {{ form_row(experience.type) }}
+                    {{ form_row(experience.name) }}
+                    {{ form_row(experience.description) }}
+                </li>
+                <button class="removeExperience">supprimer l'expérience</button>
+             {% endfor %}
+         </ul>
+         <button class="addExperience" type="button">Ajouter une expérience</button>
+
+         <ul class="formations" data-prototype="{{ form_widget(form.formations.vars.prototype)|e('html_attr') }}">
+              {% for formation in form.formations %}
+                 <li>
+                     {{ form_row(formation.school) }}
+                     {{ form_row(formation.diploma) }}
+                     {{ form_row(formation.description) }}
+                 </li>
+                 <button class="removeFormation">supprimer la formation</button>
+              {% endfor %}
+          </ul>
+          <button class="addFormation" type="button">Ajouter une formation</button>
+
+   {{ form_end(form) }}
+
+    <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/formCollectionExperiences.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/formCollectionFormations.js') }}"></script>
 {% endblock %}
