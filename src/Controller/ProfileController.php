@@ -33,17 +33,10 @@ class ProfileController extends AbstractController
         {
             $profileFiles = $request->files->get('profile');
 
-            if($profileFiles['cv'] !== null) {
-                $user = $fileUploader->uploadMultiple($user, [
-                    'cv' => $profileFiles['cv'],
-                ]);
-            }
-
-            if($profileFiles['motivation'] !== null) {
-                $user = $fileUploader->uploadMultiple($user, [
-                    'motivation' => $profileFiles['motivation']
-                ]);
-            }
+            $user = $fileUploader->uploadMultiple($user, [
+                'cv' => $profileFiles['cv'],
+                'motivation' => $profileFiles['motivation']
+            ]);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

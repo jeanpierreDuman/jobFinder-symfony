@@ -23,16 +23,18 @@ class FileUploader
     public function uploadMultiple(User $user = null, array $options = [])
     {
         foreach($options as $key => $file) {
-            $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-            $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+            if($file !== null) {
+                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
-            $directory = $this->getDirectory($key);
-            try {
-                $file->move($directory, $fileName);
-                $this->setUserFile($user, $key, $fileName);
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
+                $directory = $this->getDirectory($key);
+                try {
+                    $file->move($directory, $fileName);
+                    $this->setUserFile($user, $key, $fileName);
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
             }
         }
 
