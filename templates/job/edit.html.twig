@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello JobController!{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.type) }}
+        {{ form_row(form.domain) }}
+        {{ form_row(form.subway) }}
+        {{ form_row(form.description) }}
+
+        <ul class="criterias" data-prototype="{{ form_widget(form.criterias.vars.prototype)|e('html_attr') }}">
+             {% for criteria in form.criterias %}
+                <li>
+                    {{ form_row(criteria.name) }}
+                </li>
+                <button class="removeCriteria">supprimer ce critère</button>
+             {% endfor %}
+         </ul>
+         <button class="addCriteria" type="button">Ajouter un critère</button>
+
+     {{ form_end(form) }}
+
+     <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('js/formCollectionCriterias.js') }}"></script>
+{% endblock %}

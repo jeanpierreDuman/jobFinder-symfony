@@ -57,10 +57,16 @@ class User implements UserInterface
      */
     private $formations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Criteria", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $criterias;
+
     public function __construct()
     {
         $this->experiences = new ArrayCollection();
         $this->formations = new ArrayCollection();
+        $this->criterias = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -221,6 +227,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($formation->getUser() === $this) {
                 $formation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Criteria[]
+     */
+    public function getCriterias(): Collection
+    {
+        return $this->criterias;
+    }
+
+    public function addCriteria(Criteria $criteria): self
+    {
+        if (!$this->criterias->contains($criteria)) {
+            $this->criterias[] = $criteria;
+            $criteria->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCriteria(Criteria $criteria): self
+    {
+        if ($this->criterias->contains($criteria)) {
+            $this->criterias->removeElement($criteria);
+            // set the owning side to null (unless already changed)
+            if ($criteria->getUser() === $this) {
+                $criteria->setUser(null);
             }
         }
 

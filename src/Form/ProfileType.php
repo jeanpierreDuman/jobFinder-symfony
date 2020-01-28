@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use App\Form\ExperienceType;
 use App\Form\FormationType;
+use App\Form\CriteriaType;
 
 class ProfileType extends AbstractType
 {
@@ -55,6 +56,14 @@ class ProfileType extends AbstractType
             ])
             ->add('formations', CollectionType::class, [
                 'entry_type' => FormationType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => false
+            ])
+            ->add('criterias', CollectionType::class, [
+                'entry_type' => CriteriaType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,

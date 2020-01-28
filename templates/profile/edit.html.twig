@@ -34,9 +34,20 @@
           </ul>
           <button class="addFormation" type="button">Ajouter une formation</button>
 
+          <ul class="criterias" data-prototype="{{ form_widget(form.criterias.vars.prototype)|e('html_attr') }}">
+               {% for criteria in form.criterias %}
+                  <li>
+                      {{ form_row(criteria.name) }}
+                  </li>
+                  <button class="removeCriteria">supprimer ce critère</button>
+               {% endfor %}
+           </ul>
+           <button class="addCriteria" type="button">Ajouter un critère</button>
+
    {{ form_end(form) }}
 
     <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/formCollectionExperiences.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/formCollectionFormations.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/formCollectionCriterias.js') }}"></script>
 {% endblock %}

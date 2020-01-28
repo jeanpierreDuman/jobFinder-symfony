@@ -71,4 +71,19 @@
         </p>
     </div>
 
+    <div class="">
+        <h3>Critères</h3>
+        <p>
+            {% for criteria in user.criterias %}
+                <p>
+                    {{loop.index}} ) {{ criteria.name }}
+                </p>
+            {% else %}
+                <p>
+                    Aucun critère
+                </p>
+            {% endfor %}
+        </p>
+    </div>
+
 {% endblock %}
