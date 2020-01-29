@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello JobController!{% endblock %}
+
+{% block body %}
+<p>
+    {{ job.name }} - {{ job.type }} - {{ job.domain }} - {{ job.subway }}
+    <br>
+    {{ job.description }}
+
+    <h3>Critères</h3>
+    {% for criteria in job.criterias %}
+        <p>
+            {{ criteria.name }}
+        </p>
+    {% endfor %}
+
+    <h3>Conditions</h3>
+    {% for condition in job.conditions %}
+        <p>
+            {{ condition }}
+        </p>
+    {% endfor %}
+
+    <h3>Candidatures</h3>
+    <p>
+        {{ job.applies|length }} / {{ job.limitApply}}
+    </p>
+    <p>
+        <a href="{{ path('recruiter_show_applies', {'id': job.id}) }}">Voir les candidatures</a>
+    </p>
+
+    <hr>
+</p>
+{% endblock %}

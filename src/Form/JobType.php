@@ -25,6 +25,9 @@ class JobType extends AbstractType
                     'Alternance' => 'Alternance',
                 ],
             ])
+            ->add('limitApply', null, [
+                'label' => "Limite de candidature"
+            ])
             ->add('domain', ChoiceType::class, [
                 'choices'  => [
                     'Informatique' => 'Informatique',
@@ -43,6 +46,16 @@ class JobType extends AbstractType
                 ],
             ])
             ->add('description')
+            ->add('conditions', ChoiceType::class, [
+                'choices' => [
+                    'CV' => 'CV',
+                    'Lettre de motivation' => 'MOTIVATION',
+                    'Expérience profesionnelle' => 'XP',
+                    'Etudes' => 'ETUDE'
+                ],
+                'multiple' => true,
+                'expanded'  => true
+            ])
             ->add('criterias', CollectionType::class, [
                 'entry_type' => CriteriaType::class,
                 'entry_options' => ['label' => false],

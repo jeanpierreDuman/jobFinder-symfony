@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
@@ -48,9 +49,25 @@ class Job
      */
     private $description;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="jobs")
+     */
+    private $applies;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $conditions = [];
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $limitApply;
+
     public function __construct()
     {
         $this->criterias = new ArrayCollection();
+        $this->applies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -145,6 +162,65 @@ class Job
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getApplies(): Collection
+    {
+        return $this->applies;
+    }
+
+    public function addApply(User $apply): self
+    {
+        if (!$this->applies->contains($apply)) {
+            $this->applies[] = $apply;
+        }
+
+        return $this;
+    }
+
+    public function removeApply(User $apply): self
+    {
+        if ($this->applies->contains($apply)) {
+            $this->applies->removeElement($apply);
+        }
+
+        return $this;
+    }
+
+    public function containsUser(User $user)
+    {
+        if($this->applies->contains($user)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getConditions(): ?array
+    {
+        return $this->conditions;
+    }
+
+    public function setConditions(array $conditions): self
+    {
+        $this->conditions = $conditions;
+
+        return $this;
+    }
+
+    public function getLimitApply(): ?int
+    {
+        return $this->limitApply;
+    }
+
+    public function setLimitApply(int $limitApply): self
+    {
+        $this->limitApply = $limitApply;
 
         return $this;
     }

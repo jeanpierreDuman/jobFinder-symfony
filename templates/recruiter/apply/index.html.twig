@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <h3>Vos candidatures</h3>
+    <div>
+        {% for user in job.applies %}
+            <p>
+                {{ user.email }} - {{ user.name }}
+            </p>
+            <hr>
+        {% endfor %}
+    </div>
+{% endblock %}

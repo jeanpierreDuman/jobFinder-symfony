@@ -5,6 +5,7 @@
 {% block body %}
     {{ form_start(form) }}
 
+        {{ form_row(form.name) }}
         {{ form_row(form.email) }}
         {% if not is_granted('ROLE_RECRUITER') %}
             {{ form_row(form.cv) }}

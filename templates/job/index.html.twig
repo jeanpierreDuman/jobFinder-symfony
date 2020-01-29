@@ -1,28 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello JobController!{% endblock %}
+{% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    <div>
-        <p>
-            <a href="{{ path('job_create') }}">Ajouter une offre</a>
-        </p>
-    </div>
-
     <div class="">
+        <hr>
         {% for job in jobs %}
             <p>
                 {{ job.name }} - {{ job.type }} - {{ job.domain }} - {{ job.subway }}
-                <a href="{{ path('job_update', {'id': job.id}) }}">modifier</a>
-                <a href="{{ path('job_delete', {'id': job.id}) }}">supprimer</a>
+                <a href="{{ path('view_job_one', {'id': job.id}) }}">voir</a>
                 <br>
                 {{ job.description }}
-                <h3>Critères</h3>
-                {% for criteria in job.criterias %}
-                    <p>
-                        {{ criteria.name }}
-                    </p>
-                {% endfor %}
+                <hr>
             </p>
         {% else %}
             <p>

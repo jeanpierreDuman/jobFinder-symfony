@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block body %}
+
+    <h3>Vos candidatures</h3>
+    <hr>
+    <div>
+        {% for job in app.user.jobs %}
+            <p>
+                {{ job.name }} - {{ job.type }} - {{ job.domain }} - {{ job.subway }}
+            </p>
+            <hr>
+        {% else %}
+            <p>
+                Aucune candidature
+            </p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

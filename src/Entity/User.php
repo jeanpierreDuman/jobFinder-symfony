@@ -62,11 +62,22 @@ class User implements UserInterface
      */
     private $criterias;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Job", mappedBy="applies")
+     */
+    private $jobs;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
     public function __construct()
     {
         $this->experiences = new ArrayCollection();
         $this->formations = new ArrayCollection();
         $this->criterias = new ArrayCollection();
+        $this->jobs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -260,6 +271,46 @@ class User implements UserInterface
                 $criteria->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Job[]
+     */
+    public function getJobs(): Collection
+    {
+        return $this->jobs;
+    }
+
+    public function addJob(Job $job): self
+    {
+        if (!$this->jobs->contains($job)) {
+            $this->jobs[] = $job;
+            $job->addApply($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJob(Job $job): self
+    {
+        if ($this->jobs->contains($job)) {
+            $this->jobs->removeElement($job);
+            $job->removeApply($this);
+        }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

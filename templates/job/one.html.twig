@@ -3,5 +3,41 @@
 {% block title %}Hello JobController!{% endblock %}
 
 {% block body %}
-    {{ dump(job) }}
+    <p>
+        {{ job.name }} - {{ job.type }} - {{ job.domain }} - {{ job.subway }}
+        <br>
+        {{ job.description }}
+
+        <h3>Critères</h3>
+        {% for criteria in job.criterias %}
+            <p>
+                {{ criteria.name }}
+            </p>
+        {% endfor %}
+
+        <h3>Conditions</h3>
+        {% for condition in job.conditions %}
+            <p>
+                {{ condition }}
+            </p>
+        {% endfor %}
+
+        {% if not is_granted('ROLE_RECRUITER') %}
+            {% if job|verifyConditionApply(app.user) == true and job|verifyLimitApply == true and job.containsUser(app.user) != true %}
+                <div>
+                    <a href="{{ path('job_apply',{'id': job.id}) }}">Postuler</a>
+                </div>
+            {% else %}
+                <div>
+                    <p>
+                        Vous ne pouvez pas postuler à cette offre, voici les possibilitées : <br>
+                        - Le nombre total d'offre a été atteint <br>
+                        - Les critères ne correspondent pas à votre profil <br>
+                        - Vous avez déjà postulé
+                    </p>
+                </div>
+            {% endif %}
+        {% endif %}
+        <hr>
+    </p>
 {% endblock %}

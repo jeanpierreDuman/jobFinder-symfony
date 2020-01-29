@@ -6,17 +6,24 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <div class="">
+            <h2>Menu</h2>
+        </div>
+
         {% if app.user is null %}
             <div class="">
                 <p>
-                    <a href="{{ path('login') }}">Connexion</a>
+                    <a href="{{ path('app_login') }}">Connexion</a>
                 </p>
                 <p>
-                    <a href="{{ path('register') }}">Inscription</a>
+                    <a href="{{ path('app_register') }}">Inscription</a>
                 </p>
             </div>
         {% else %}
             <div class="">
+                <p>
+                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                </p>
                 <p>
                     <a href="{{ path('home') }}">Les offres d'emploi</a>
                 </p>
@@ -27,10 +34,17 @@
                     <p>
                         <a href="{{ path('job') }}">Gestion des offres</a>
                     </p>
+                {% else %}
+                    <p>
+                        <a href="{{ path('profile_applies') }}">Mes candidatures</a>
+                    </p>
                 {% endif %}
             </div>
-
         {% endif %}
+
+        <div class="">
+            <h2>Route : {{ app.request.pathInfo }}</h2>
+        </div>
 
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}

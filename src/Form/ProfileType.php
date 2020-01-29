@@ -18,6 +18,7 @@ class ProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('name');
         $builder->add('email');
 
         if(!in_array('ROLE_RECRUITER', $options['roles'])) {

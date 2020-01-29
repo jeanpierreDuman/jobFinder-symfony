@@ -18,9 +18,17 @@ class ProfileController extends AbstractController
      */
     public function index()
     {
-        return $this->render('profile/index.html.twig', [
+        return $this->render('user/profile/index.html.twig', [
             'user' => $this->getUser()
         ]);
+    }
+
+    /**
+     * @Route("/applies", name="profile_applies")
+     */
+    public function showUserApplies()
+    {
+        return $this->render('user/profile/applies.html.twig');
     }
 
     /**
@@ -66,7 +74,7 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('profile');
         }
 
-        return $this->render('profile/edit.html.twig', [
+        return $this->render('user/profile/edit.html.twig', [
             'form' => $form->createView()
         ]);
     }

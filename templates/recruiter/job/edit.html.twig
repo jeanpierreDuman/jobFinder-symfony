@@ -9,6 +9,8 @@
         {{ form_row(form.type) }}
         {{ form_row(form.domain) }}
         {{ form_row(form.subway) }}
+        {{ form_row(form.limitApply) }}
+        {{ form_row(form.conditions) }}
         {{ form_row(form.description) }}
 
         <ul class="criterias" data-prototype="{{ form_widget(form.criterias.vars.prototype)|e('html_attr') }}">
