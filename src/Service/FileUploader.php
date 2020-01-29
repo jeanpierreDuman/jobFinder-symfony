@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Filesystem\Filesystem;
 use App\Entity\User;
@@ -84,4 +85,12 @@ class FileUploader
         }
     }
 
+    public function showFile($path)
+    {
+        if(file_exists($path)) {
+            return new BinaryFileResponse($path);
+        }
+
+        throw new \Exception('file does not exist');
+    }
 }

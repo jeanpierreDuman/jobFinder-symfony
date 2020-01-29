@@ -21,6 +21,22 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @Route("/profile/cv/show", name="profile_cv_show")
+     */
+    public function showCvPDF(Request $request, FileUploader $fileUploader)
+    {
+        return $fileUploader->showFile($this->getParameter('cv_directory') . '/' . $this->getUser()->getCv());
+    }
+
+    /**
+     * @Route("/profile/motivation/show", name="profile_motivation_show")
+     */
+    public function showMotivationPDF(Request $request, FileUploader $fileUploader)
+    {
+        return $fileUploader->showFile($this->getParameter('motivation_directory') . '/' . $this->getUser()->getMotivation());
+    }
+
+    /**
      * @Route("/profile/edit", name="profile_edit")
      */
     public function edit(Request $request, FileUploader $fileUploader)

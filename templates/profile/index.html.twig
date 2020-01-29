@@ -23,7 +23,7 @@
                         Aucun document
                     </b>
                 {% else %}
-                    {{ user.cv }}
+                    <a target="_blank" href="{{ path('profile_cv_show') }}">Voir mon cv</a>
                 {% endif %}
             </p>
             <p>
@@ -33,7 +33,7 @@
                         Aucun document
                     </b>
                 {% else %}
-                    {{ user.motivation }}
+                    <a target="_blank" href="{{ path('profile_motivation_show') }}">Voir ma lettre de motivation</a>
                 {% endif %}
             </p>
         </div>
