@@ -18,21 +18,22 @@ class ProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('email')
-            ->add('cv', FileType::class, [
-                'mapped' => false,
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'mimeTypes' => [
-                            'application/pdf',
-                            'application/x-pdf',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid PDF document',
-                    ])
-                ]
-            ])
+        $builder->add('email');
+
+        if(!in_array('ROLE_RECRUITER', $options['roles'])) {
+            $builder->add('cv', FileType::class, [
+                    'mapped' => false,
+                    'required' => false,
+                    'constraints' => [
+                        new File([
+                            'mimeTypes' => [
+                                'application/pdf',
+                                'application/x-pdf',
+                            ],
+                            'mimeTypesMessage' => 'Please upload a valid PDF document',
+                        ])
+                    ]
+                ])
             ->add('motivation', FileType::class, [
                 'mapped' => false,
                 'required' => false,
@@ -45,7 +46,12 @@ class ProfileType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid PDF document',
                     ])
                 ]
-            ])
+            ]);
+        }
+
+
+
+        $builder
             ->add('experiences', CollectionType::class, [
                 'entry_type' => ExperienceType::class,
                 'entry_options' => ['label' => false],
@@ -61,15 +67,20 @@ class ProfileType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
                 'label' => false
-            ])
-            ->add('criterias', CollectionType::class, [
+            ]);
+
+        if(!in_array('ROLE_RECRUITER', $options['roles'])) {
+            $builder->add('criterias', CollectionType::class, [
                 'entry_type' => CriteriaType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
                 'label' => false
-            ])
+            ]);
+        }
+
+        $builder
             ->add('save', SubmitType::class, [
                 'attr' => ['class' => 'save'],
             ]);
@@ -80,6 +91,7 @@ class ProfileType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'roles' => []
         ]);
     }
 }

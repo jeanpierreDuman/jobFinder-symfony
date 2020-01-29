@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\User;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -8,10 +8,13 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\ProfileType;
 use App\Service\FileUploader;
 
+/**
+ * @Route("/profile")
+ */
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/profile", name="profile")
+     * @Route("/", name="profile")
      */
     public function index()
     {
@@ -21,7 +24,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/profile/cv/show", name="profile_cv_show")
+     * @Route("/cv/show", name="profile_cv_show")
      */
     public function showCvPDF(Request $request, FileUploader $fileUploader)
     {
@@ -29,7 +32,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/profile/motivation/show", name="profile_motivation_show")
+     * @Route("/motivation/show", name="profile_motivation_show")
      */
     public function showMotivationPDF(Request $request, FileUploader $fileUploader)
     {
@@ -37,12 +40,14 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/profile/edit", name="profile_edit")
+     * @Route("/edit", name="profile_edit")
      */
     public function edit(Request $request, FileUploader $fileUploader)
     {
         $user = $this->getUser();
-        $form = $this->createForm(ProfileType::class, $user);
+        $form = $this->createForm(ProfileType::class, $user, [
+            'roles' => $user->getRoles()
+        ]);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())

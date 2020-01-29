@@ -6,6 +6,32 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        {% if app.user is null %}
+            <div class="">
+                <p>
+                    <a href="{{ path('login') }}">Connexion</a>
+                </p>
+                <p>
+                    <a href="{{ path('register') }}">Inscription</a>
+                </p>
+            </div>
+        {% else %}
+            <div class="">
+                <p>
+                    <a href="{{ path('home') }}">Les offres d'emploi</a>
+                </p>
+                <p>
+                    <a href="{{ path('profile') }}">Mon profile</a>
+                </p>
+                {% if is_granted('ROLE_RECRUITER') %}
+                    <p>
+                        <a href="{{ path('job') }}">Gestion des offres</a>
+                    </p>
+                {% endif %}
+            </div>
+
+        {% endif %}
+
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

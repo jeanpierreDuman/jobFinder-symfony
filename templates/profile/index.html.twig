@@ -13,31 +13,33 @@
         </p>
     </div>
 
-    <div class="">
-        <h3>Documents</h3>
-        <div>
-            <p>
-                CV :
-                {% if user.cv is null or user.cv == '' %}
-                    <b>
-                        Aucun document
-                    </b>
-                {% else %}
-                    <a target="_blank" href="{{ path('profile_cv_show') }}">Voir mon cv</a>
-                {% endif %}
-            </p>
-            <p>
-                Lettre de motivation :
-                {% if user.motivation is null or user.motivation == '' %}
-                    <b>
-                        Aucun document
-                    </b>
-                {% else %}
-                    <a target="_blank" href="{{ path('profile_motivation_show') }}">Voir ma lettre de motivation</a>
-                {% endif %}
-            </p>
+    {% if not is_granted('ROLE_RECRUITER') %}
+        <div class="">
+            <h3>Documents</h3>
+            <div>
+                <p>
+                    CV :
+                    {% if user.cv is null or user.cv == '' %}
+                        <b>
+                            Aucun document
+                        </b>
+                    {% else %}
+                        <a target="_blank" href="{{ path('profile_cv_show') }}">Voir mon cv</a>
+                    {% endif %}
+                </p>
+                <p>
+                    Lettre de motivation :
+                    {% if user.motivation is null or user.motivation == '' %}
+                        <b>
+                            Aucun document
+                        </b>
+                    {% else %}
+                        <a target="_blank" href="{{ path('profile_motivation_show') }}">Voir ma lettre de motivation</a>
+                    {% endif %}
+                </p>
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     <div class="">
         <h3>Expériences</h3>
@@ -71,19 +73,21 @@
         </p>
     </div>
 
-    <div class="">
-        <h3>Critères</h3>
-        <p>
-            {% for criteria in user.criterias %}
-                <p>
-                    {{loop.index}} ) {{ criteria.name }}
-                </p>
-            {% else %}
-                <p>
-                    Aucun critère
-                </p>
-            {% endfor %}
-        </p>
-    </div>
+    {% if not is_granted('ROLE_RECRUITER') %}
+        <div class="">
+            <h3>Critères</h3>
+            <p>
+                {% for criteria in user.criterias %}
+                    <p>
+                        {{loop.index}} ) {{ criteria.name }}
+                    </p>
+                {% else %}
+                    <p>
+                        Aucun critère
+                    </p>
+                {% endfor %}
+            </p>
+        </div>
+    {% endif %}
 
 {% endblock %}

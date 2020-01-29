@@ -6,8 +6,10 @@
     {{ form_start(form) }}
 
         {{ form_row(form.email) }}
-        {{ form_row(form.cv) }}
-        {{ form_row(form.motivation) }}
+        {% if not is_granted('ROLE_RECRUITER') %}
+            {{ form_row(form.cv) }}
+            {{ form_row(form.motivation) }}
+        {% endif %}
 
         <ul class="experiences" data-prototype="{{ form_widget(form.experiences.vars.prototype)|e('html_attr') }}">
              {% for experience in form.experiences %}
@@ -34,15 +36,17 @@
           </ul>
           <button class="addFormation" type="button">Ajouter une formation</button>
 
-          <ul class="criterias" data-prototype="{{ form_widget(form.criterias.vars.prototype)|e('html_attr') }}">
-               {% for criteria in form.criterias %}
-                  <li>
-                      {{ form_row(criteria.name) }}
-                  </li>
-                  <button class="removeCriteria">supprimer ce critère</button>
-               {% endfor %}
-           </ul>
-           <button class="addCriteria" type="button">Ajouter un critère</button>
+          {% if not is_granted('ROLE_RECRUITER') %}
+              <ul class="criterias" data-prototype="{{ form_widget(form.criterias.vars.prototype)|e('html_attr') }}">
+                   {% for criteria in form.criterias %}
+                      <li>
+                          {{ form_row(criteria.name) }}
+                      </li>
+                      <button class="removeCriteria">supprimer ce critère</button>
+                   {% endfor %}
+               </ul>
+               <button class="addCriteria" type="button">Ajouter un critère</button>
+           {% endif %}
 
    {{ form_end(form) }}
 
