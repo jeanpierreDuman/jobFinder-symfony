@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Job;
 use App\Form\JobType;
+use App\Form\SearchJobType;
 use App\Repository\JobRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -19,8 +20,16 @@ class JobController extends AbstractController
      */
     public function getJobs(Request $request, JobRepository $jobRepository)
     {
+        $form = $this->createForm(SearchJobType::class, null, [
+            'method' => 'GET'
+        ]);
+        $form->handleRequest($request);
+
+        $jobs = $jobRepository->search($request->query->get('search_job'));
+
         return $this->render('job/index.html.twig', [
-            'jobs' => $jobRepository->findAll()
+            'jobs' => $jobs,
+            'form' => $form->createView()
         ]);
     }
 

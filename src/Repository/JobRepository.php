@@ -20,32 +20,27 @@ class JobRepository extends ServiceEntityRepository
         parent::__construct($registry, Job::class);
     }
 
-    // /**
-    //  * @return Job[] Returns an array of Job objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function search($dataSearch)
     {
-        return $this->createQueryBuilder('j')
-            ->andWhere('j.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('j.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $dataSearch = $this->removeUselessData($dataSearch);
 
-    /*
-    public function findOneBySomeField($value): ?Job
-    {
-        return $this->createQueryBuilder('j')
-            ->andWhere('j.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $request = $this->createQueryBuilder('j');
+
+        foreach($dataSearch as $key => $data) {
+            if($data !== '') {
+                $request->andWhere('j.' . $key . ' = :' . $key)
+                        ->setParameter(':'. $key, $data);
+            }
+        }
+
+        return $request->getQuery()->getResult();
     }
-    */
+
+    private function removeUselessData($array)
+    {
+        unset($array['save']);
+        unset($array['_token']);
+
+        return $array;
+    }
 }

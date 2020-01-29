@@ -5,6 +5,8 @@
 {% block body %}
     <div class="">
         <hr>
+            {{ form(form) }}
+        <hr>
         {% for job in jobs %}
             <p>
                 {{ job.name }} - {{ job.type }} - {{ job.domain }} - {{ job.subway }}
