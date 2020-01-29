@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -25,6 +26,14 @@ class RegistrationFormType extends AbstractType
                         'message' => 'You should agree to our terms.',
                     ]),
                 ],
+            ])
+            ->add('role', ChoiceType::class, [
+                'choices'  => [
+                    'User' => 'ROLE_USER',
+                    'Recruiter' => 'ROLE_RECRUITER',
+                ],
+                'mapped' => false,
+                'label' => 'As a'
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
