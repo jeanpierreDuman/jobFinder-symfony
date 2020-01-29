@@ -72,12 +72,18 @@ class User implements UserInterface
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Job", mappedBy="user")
+     */
+    private $jobCreated;
+
     public function __construct()
     {
         $this->experiences = new ArrayCollection();
         $this->formations = new ArrayCollection();
         $this->criterias = new ArrayCollection();
         $this->jobs = new ArrayCollection();
+        $this->jobCreated = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -313,5 +319,13 @@ class User implements UserInterface
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Job[]
+     */
+    public function getJobCreated(): Collection
+    {
+        return $this->jobCreated;
     }
 }

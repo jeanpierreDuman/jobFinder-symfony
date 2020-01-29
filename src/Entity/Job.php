@@ -64,6 +64,11 @@ class Job
      */
     private $limitApply;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="job")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->criterias = new ArrayCollection();
@@ -221,6 +226,18 @@ class Job
     public function setLimitApply(int $limitApply): self
     {
         $this->limitApply = $limitApply;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

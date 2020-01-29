@@ -7,7 +7,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Job;
 use App\Form\JobType;
-use App\Repository\JobRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use App\Form\CriteriaType;
@@ -20,10 +19,12 @@ class JobController extends AbstractController
     /**
      * @Route("/job", name="job")
      */
-    public function getJobs(Request $request, JobRepository $jobRepository)
+    public function getJobs(Request $request)
     {
+        $jobs = $this->getUser()->getJobCreated();
+
         return $this->render('recruiter/job/index.html.twig', [
-            'jobs' => $jobRepository->findAll()
+            'jobs' => $jobs
         ]);
     }
 
@@ -73,6 +74,7 @@ class JobController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
+            $job->setUser($this->getUser());
             $em->persist($job);
             $em->flush();
 
