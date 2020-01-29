@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ProfileType;
 use App\Service\FileUploader;
+use App\Entity\User;
 
 /**
  * @Route("/profile")
@@ -24,6 +25,16 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @Route("/user/{id}", name="show_user_profile")
+     */
+    public function showUserProfile(User $user)
+    {
+        return $this->render('user/profile/user_index.html.twig', [
+            'user' => $user
+        ]);
+    }
+
+    /**
      * @Route("/applies", name="profile_applies")
      */
     public function showUserApplies()
@@ -36,7 +47,13 @@ class ProfileController extends AbstractController
      */
     public function showCvPDF(Request $request, FileUploader $fileUploader)
     {
-        return $fileUploader->showFile($this->getParameter('cv_directory') . '/' . $this->getUser()->getCv());
+        $path = $request->query->get('path');
+
+        if($path === null) {
+            $path = $this->getUser()->getCv();
+        }
+
+        return $fileUploader->showFile($this->getParameter('cv_directory') . '/' . $path);
     }
 
     /**
@@ -44,7 +61,13 @@ class ProfileController extends AbstractController
      */
     public function showMotivationPDF(Request $request, FileUploader $fileUploader)
     {
-        return $fileUploader->showFile($this->getParameter('motivation_directory') . '/' . $this->getUser()->getMotivation());
+        $path = $request->query->get('path');
+
+        if($path === null) {
+            $path = $this->getUser()->getMotivation();
+        }
+
+        return $fileUploader->showFile($this->getParameter('motivation_directory') . '/' . $path);
     }
 
     /**

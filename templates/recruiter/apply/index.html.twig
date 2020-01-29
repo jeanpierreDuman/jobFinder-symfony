@@ -7,7 +7,7 @@
     <div>
         {% for user in job.applies %}
             <p>
-                {{ user.email }} - {{ user.name }}
+                {{ user.email }} - {{ user.name }} - <a target="_blank" href="{{ path('show_user_profile', {'id': user.id}) }}">voir le profil</a>
             </p>
             <hr>
         {% endfor %}
