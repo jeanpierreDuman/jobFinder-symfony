@@ -25,16 +25,6 @@ class JobController extends AbstractController
     }
 
     /**
-     * @Route("/job/{id}", name="job_one")
-     */
-    public function one(Request $request, Job $job)
-    {
-        return $this->render('job/one.html.twig', [
-            'job' => $job
-        ]);
-    }
-
-    /**
      * @Route("/job/create", name="job_create")
      */
     public function createJob(Request $request)
@@ -47,7 +37,17 @@ class JobController extends AbstractController
      */
     public function update(Request $request, Job $job)
     {
-        return $this->createOrUpdate($request, $job);
+        return $this->createOrUpdateJob($request, $job);
+    }
+
+    /**
+     * @Route("/job/{id}", name="job_one")
+     */
+    public function one(Request $request, Job $job)
+    {
+        return $this->render('job/one.html.twig', [
+            'job' => $job
+        ]);
     }
 
     /**

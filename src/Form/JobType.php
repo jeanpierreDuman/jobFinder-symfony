@@ -19,27 +19,27 @@ class JobType extends AbstractType
             ->add('name')
             ->add('type', ChoiceType::class, [
                 'choices'  => [
-                    'CDD' => 'cdd',
-                    'CDI' => 'cdi',
-                    'Stage' => 'stage',
-                    'Alternance' => 'alternance',
+                    'CDD' => 'CDD',
+                    'CDI' => 'CDI',
+                    'Stage' => 'Stage',
+                    'Alternance' => 'Alternance',
                 ],
             ])
             ->add('domain', ChoiceType::class, [
                 'choices'  => [
-                    'Informatique' => 'informatique',
-                    'Management' => 'management',
-                    'Recrutement' => 'recrutement',
+                    'Informatique' => 'Informatique',
+                    'Management' => 'Management',
+                    'Recrutement' => 'Recrutement',
                 ],
             ])
             ->add('subway', ChoiceType::class, [
                 'choices'  => [
-                    'M12 Abbesses' => 'm12_abbesses',
-                    'M4 Alésia' => 'm4_alesia',
-                    'M2 Anvers' => 'm2_anvers',
-                    'M1 Bérault' => 'm1_berault',
-                    'M9 Billancourt' => 'm9_billancourt',
-                    'M8 Chemin-Vert' => 'm8_chemin_vert'
+                    'M12 Abbesses' => 'M12 Abbesses',
+                    'M4 Alésia' => 'M4 Alésia',
+                    'M2 Anvers' => 'M2 Anvers',
+                    'M1 Bérault' => 'M1 Bérault',
+                    'M9 Billancourt' => 'M9 Billancourt',
+                    'M8 Chemin-Vert' => 'M8 Chemin-Vert'
                 ],
             ])
             ->add('description')

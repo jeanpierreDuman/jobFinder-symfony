@@ -15,14 +15,14 @@ class CriteriaType extends AbstractType
         $builder
             ->add('name', ChoiceType::class, [
                 'choices'  => [
-                    'CSS' => 'css',
-                    'PHP' => 'php',
-                    'HTML' => 'html',
-                    'Symfony' => 'symfony',
-                    'Django' => 'django',
-                    'Python' => 'python',
-                    'Gestion de projet' => 'gestion de projet',
-                    'Autonome' => 'autonome',
+                    'CSS' => 'CSS',
+                    'PHP' => 'PHP',
+                    'HTML' => 'HTML',
+                    'Symfony' => 'Symfony',
+                    'Django' => 'Django',
+                    'Python' => 'Python',
+                    'Gestion de projet' => 'Gestion de projet',
+                    'Autonome' => 'Autonome',
                 ],
             ])
         ;

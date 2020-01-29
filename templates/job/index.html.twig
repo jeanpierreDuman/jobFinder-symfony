@@ -3,5 +3,31 @@
 {% block title %}Hello JobController!{% endblock %}
 
 {% block body %}
-    {{ dump(jobs) }}
+    <div>
+        <p>
+            <a href="{{ path('job_create') }}">Ajouter une offre</a>
+        </p>
+    </div>
+
+    <div class="">
+        {% for job in jobs %}
+            <p>
+                {{ job.name }} - {{ job.type }} - {{ job.domain }} - {{ job.subway }}
+                <a href="{{ path('job_update', {'id': job.id}) }}">modifier</a>
+                <a href="{{ path('job_delete', {'id': job.id}) }}">supprimer</a>
+                <br>
+                {{ job.description }}
+                <h3>Critères</h3>
+                {% for criteria in job.criterias %}
+                    <p>
+                        {{ criteria.name }}
+                    </p>
+                {% endfor %}
+            </p>
+        {% else %}
+            <p>
+                No jobs
+            </p>
+        {% endfor %}
+    </div>
 {% endblock %}
