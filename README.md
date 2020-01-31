@@ -36,3 +36,13 @@ Rechercher une offre d'emploi
 - Data Fixtures
 - Mini test unitaire sur entité User
 - Utilisation de commande en général
+
+### Les composants utilisés
+- Twig
+- Doctrine
+- Routing
+- Services
+- Formulaires imbriquées
+- Serializer
+- Validators
+Console
