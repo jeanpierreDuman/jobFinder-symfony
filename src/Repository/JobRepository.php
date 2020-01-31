@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Job;
-use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -23,6 +22,10 @@ class JobRepository extends ServiceEntityRepository
     public function search($dataSearch)
     {
         $dataSearch = $this->removeUselessData($dataSearch);
+
+        if($dataSearch === null) {
+            $dataSearch = [];
+        }
 
         $request = $this->createQueryBuilder('j');
 

@@ -6,12 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Job;
-use App\Form\JobType;
 use App\Form\SearchJobType;
 use App\Repository\JobRepository;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use App\Form\CriteriaType;
 
 class JobController extends AbstractController
 {
