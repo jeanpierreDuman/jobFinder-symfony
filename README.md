@@ -43,6 +43,5 @@ Rechercher une offre d'emploi
 - Routing
 - Services
 - Formulaires imbriquées
-- Serializer
 - Validators
-Console
+- Console
